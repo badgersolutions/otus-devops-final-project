@@ -15,3 +15,7 @@ do
   docker build -t docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_$service:latest .
   docker push docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_$service:latest
 done
+
+cd $WORKDIR/../service/mongodb
+docker build -t docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest .
+docker push docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest
