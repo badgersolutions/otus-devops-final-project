@@ -34,15 +34,15 @@
 	</dependencyManagement>
 	
 	<modules>
-		<module>src/config</module>
-		<module>src/monitoring</module>
-		<module>src/registry</module>
-		<module>src/gateway</module>
-		<module>src/auth-service</module>
-		<module>src/account-service</module>
-		<module>src/statistics-service</module>
-		<module>src/notification-service</module>
-		<module>src/turbine-stream-service</module>
+		<module>config</module>
+		<module>monitoring</module>
+		<module>registry</module>
+		<module>gateway</module>
+		<module>auth-service</module>
+		<module>account-service</module>
+		<module>statistics-service</module>
+		<module>notification-service</module>
+		<module>turbine-stream-service</module>
 	</modules>
 
 </project>
