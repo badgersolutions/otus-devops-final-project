@@ -24,4 +24,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: cd src && mvn -pl .,config -B package --file pom.xml sonar:sonar
+      working-directory: src
+      run: mvn -B clean package verify
