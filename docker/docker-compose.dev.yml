@@ -13,7 +13,7 @@ services:
     build: ../src/registry
 
   gateway:
-    build: gateway
+    build: ../src/gateway
 
   auth-service:
     build: ../src/auth-service
