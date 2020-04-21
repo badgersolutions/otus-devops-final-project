@@ -1,0 +1,63 @@
+version: '2.1'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management 
+    ports:
+      - 5672:5672
+
+  config:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config 
+    ports:
+      - 8888:8888
+
+  registry:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_registry
+
+  gateway:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_gateway
+
+  auth-service:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_auth-service
+    ports:
+      - 5000:5000
+
+  auth-mongodb:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
+    ports:
+      - 25000:27017
+
+  account-service:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_account-service
+    ports:
+      - 6000:6000
+
+  account-mongodb:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
+    ports:
+      - 26000:27017
+
+  statistics-service:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_statistics-service
+    ports:
+      - 7000:7000
+
+  statistics-mongodb:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
+    ports:
+      - 27000:27017
+
+  notification-service:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_notification-service
+    ports:
+      - 8000:8000
+
+  notification-mongodb:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
+    ports:
+      - 28000:27017
+
+  monitoring:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_monitoring
+
+  turbine-stream-service:
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_turbine-stream-service

@@ -1,6 +1,7 @@
 version: '2.1'
 services:
   rabbitmq:
+    image: rabbitmq:3-management 
     ports:
       - 5672:5672
 
@@ -13,7 +14,7 @@ services:
     build: ../src/registry
 
   gateway:
-    build: gateway
+    build: ../src/gateway
 
   auth-service:
     build: ../src/auth-service

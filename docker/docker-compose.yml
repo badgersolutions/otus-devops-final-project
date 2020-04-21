@@ -6,9 +6,10 @@ services:
     ports:
       - 15672:15672
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
+
 
   config:
     environment:
@@ -16,9 +17,9 @@ services:
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config
     restart: always
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   registry:
     environment:
@@ -31,9 +32,9 @@ services:
     ports:
       - 8761:8761
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   gateway:
     environment:
@@ -46,9 +47,9 @@ services:
     ports:
       - 80:4000
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   auth-service:
     environment:
@@ -63,9 +64,9 @@ services:
       config:
         condition: service_healthy
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   auth-mongodb:
     environment:
@@ -73,9 +74,9 @@ services:
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
     restart: always
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   account-service:
     environment:
@@ -88,9 +89,9 @@ services:
       config:
         condition: service_healthy
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   account-mongodb:
     environment:
@@ -99,9 +100,9 @@ services:
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
     restart: always
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   statistics-service:
     environment:
@@ -114,9 +115,9 @@ services:
       config:
         condition: service_healthy
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   statistics-mongodb:
     environment:
@@ -124,9 +125,9 @@ services:
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
     restart: always
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   notification-service:
     environment:
@@ -139,9 +140,9 @@ services:
       config:
         condition: service_healthy
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   notification-mongodb:
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb
@@ -149,9 +150,9 @@ services:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   monitoring:
     environment:
@@ -164,9 +165,9 @@ services:
     ports:
       - 9000:8080
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
 
   turbine-stream-service:
     environment:
@@ -179,6 +180,6 @@ services:
     ports:
       - 8989:8989
     logging:
+      driver: "fluentd"
       options:
-        max-size: "10m"
-        max-file: "10"
+        fluentd-address: localhost:24224
