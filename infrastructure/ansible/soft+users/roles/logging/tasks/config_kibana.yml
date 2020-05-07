@@ -1,0 +1,7 @@
+- name: 0. Ubuntu. Copy limits.conf
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    mode: 0644
+  ignore_errors: yes
+  notify: kibana restart

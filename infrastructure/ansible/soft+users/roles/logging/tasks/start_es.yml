@@ -1,0 +1,6 @@
+- name: 0. Ubuntu. Start Elasticsearch
+  systemd:
+    name: elasticsearch
+    state: started
+    enabled: yes
+  ignore_errors: yes

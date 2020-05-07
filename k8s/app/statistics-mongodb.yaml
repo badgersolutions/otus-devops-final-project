@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics-mongodb
+  namespace: stage
+  labels:
+    app: statistics-mongodb
+    sub: stage-app
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: statistics-mongodb
+      sub: stage-app
+  template:
+    metadata:
+      labels:
+        app: statistics-mongodb
+        sub: stage-app
+    spec:
+      containers:
+        - name: statistics-mongodb
+          image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:1.0
+          env:
+          - name: MONGODB_PASSWORD
+            value: SecureP@ssw0rd
+      imagePullSecrets:
+        - name: github-pkg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statistics-mongodb
+  namespace: stage
+  labels:
+    app: statistics-mongodb
+spec:
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+  selector:
+    app: statistics-mongodb
+    sub: stage-app

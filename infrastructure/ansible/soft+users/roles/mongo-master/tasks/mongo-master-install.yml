@@ -1,0 +1,85 @@
+- name: 0. Ubuntu. Install packages
+  apt:
+    name:
+      - python-apt
+      - gcc
+      - python-setuptools
+      - python-pip
+    state: latest
+
+- name: 1. Ubuntu. Install pymongo
+  pip:
+    name: pymongo
+  ignore_errors: yes
+
+- name: 2. Ubuntu. Send file to remote
+  copy: 
+    src: mongodb-org-mongos_4.2.5_amd64.deb
+    dest: /tmp/
+  
+- name: 3. Ubuntu. Send file to remote
+  copy: 
+    src: mongodb-org-server_4.2.5_amd64.deb
+    dest: /tmp/
+      
+- name: 4. Ubuntu. Send file to remote
+  copy: 
+    src: mongodb-org-shell_4.2.5_amd64.deb
+    dest: /tmp/
+
+- name: 5. Ubuntu. Send file to remote
+  copy: 
+    src: mongodb-org-tools_4.2.5_amd64.deb
+    dest: /tmp/
+    
+- name: 6. Ubuntu. Install package "mongodb-org"
+  command: sudo dpkg -i /tmp/mongodb-org-mongos_4.2.5_amd64.deb
+
+- name: 7. Ubuntu. Install package "mongodb-org"
+  command: sudo dpkg -i /tmp/mongodb-org-server_4.2.5_amd64.deb
+
+- name: 8. Ubuntu. Install package "mongodb-org"
+  command: sudo dpkg -i /tmp/mongodb-org-shell_4.2.5_amd64.deb
+
+- name: 9. Ubuntu. Install package "mongodb-org"
+  command: sudo dpkg -i /tmp/mongodb-org-tools_4.2.5_amd64.deb
+
+- name: 10. Ubuntu. Copy keyfile of mongodb
+  copy: 
+    src: ../soft+users/roles/mongo-master/files/replset_keyfile
+    dest: /var/lib/mongodb/replset_keyfile
+    mode: '400'
+    owner: mongodb
+    group: mongodb
+    force: yes
+
+- name: 11. Ubuntu. Start mongo_db service
+  service:
+    name: mongod
+    state: started
+
+- name: 12. Ubuntu. Add user to mongodb
+  mongodb_user:
+    database: admin
+    name: admin
+    roles: userAdminAnyDatabase,readWriteAnyDatabase,root
+    state: present
+    update_password: on_create
+    password: admin
+  ignore_errors: yes
+
+- name: 13. Ubuntu. Copy config of mongodb
+  copy: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} force=yes
+  with_items:
+            - { src: 'mongod.conf', dest: '/etc/mongod.conf', mode: "0755"}
+
+- name: 14. Ubuntu. Apply sysctl config
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: '1'
+
+- name: 15. Ubuntu. Restart mongo_db service
+  service:
+    name: mongod
+    state: restarted
+  ignore_errors: yes

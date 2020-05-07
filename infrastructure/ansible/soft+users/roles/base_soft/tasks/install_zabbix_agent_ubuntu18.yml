@@ -1,0 +1,27 @@
+- name: 0. Ubuntu. Install zabbix-agent
+  apt:
+    deb: https://repo.zabbix.com/zabbix/4.4/ubuntu/pool/main/z/zabbix/zabbix-agent_4.4.5-2+bionic_amd64.deb
+    
+
+- name: 1. Ubuntu. Crate dir zabbix_agentd.d
+  file:
+    path: /etc/zabbix/zabbix_agentd.d/
+    state: directory
+    mode: '0755'
+
+- name: 2. Ubuntu. Restart Zabbix-agent
+  systemd:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+  ignore_errors: yes
+
+- name: 3. Ubuntu. Copy zabbix agent config
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    mode: 0644
+    backup: yes
+    validate: zabbix_agentd -c %s
+  notify: restart zabbix-agent
+  ignore_errors: yes

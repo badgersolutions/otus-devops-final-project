@@ -1,0 +1,3 @@
+- name: 0. Ubuntu. Enable fqdn hostname in terminal
+  script: ../files/enable_fqdn_ubuntu.sh
+  ignore_errors: yes   

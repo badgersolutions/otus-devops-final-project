@@ -1,0 +1,9 @@
+- name: 0. Ubuntu. Install Kibana v7.5.2
+  apt:
+    deb: https://artifacts.elastic.co/downloads/kibana/kibana-7.5.2-amd64.deb
+
+- name: 1. Ubuntu. Stop Kibana
+  systemd:
+    name: kibana
+    state: stopped
+  ignore_errors: yes

@@ -1,0 +1,30 @@
+---
+- name: 0. Ubuntu. Add ppa repo
+  apt_repository:
+    repo: 'ppa:nginx/stable'
+    codename: bionic
+
+- name: 1. Ubuntu. Update packages
+  apt:
+    update_cache: yes
+
+- name: 2. Ubuntu. Install nginx
+  apt:
+    name:
+      - nginx=1.16.1-0+bionic1
+  ignore_errors: yes
+
+- name: 3. Ubuntu. Check nginx cache folder
+  file:
+    path: /var/cache/nginx/minio_cache/
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: 4. Ubuntu. Start nginx
+  systemd:
+    name: nginx
+    state: started
+    enabled: yes
+  ignore_errors: yes

@@ -1,0 +1,19 @@
+upstream zabbix {
+    server 10.0.1.11:80;
+}
+
+upstream hap_k8s {
+    server 10.0.1.10:9201;
+}
+
+upstream hap {
+    server 10.0.1.9:9201;
+}
+
+upstream kibana {
+    server 10.0.1.20:5601;
+}
+
+upstream k8s {
+    server 10.0.1.100:80;
+}

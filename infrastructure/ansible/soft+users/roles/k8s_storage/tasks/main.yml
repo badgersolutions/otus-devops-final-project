@@ -1,0 +1,5 @@
+---
+- name: install_apps
+  include: install_apps.yml
+  tags: 
+    - install_apps
