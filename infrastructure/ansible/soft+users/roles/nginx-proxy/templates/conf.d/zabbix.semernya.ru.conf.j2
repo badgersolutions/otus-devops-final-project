@@ -1,16 +1,14 @@
 server {
-    # Redirect from HTTP to HTTPS
     listen 80;
     server_name zabbix.semernya.ru;
-    access_log /var/log/nginx/access.zabbix.log main;
+    access_log /var/log/nginx/access.zabbix.log main_up;
     error_log /var/log/nginx/error.zabbix.log;
 
     keepalive_timeout 650;
     keepalive_requests 10000;
 
-    return 301 https://zabbix.semernya.ru$request_uri;
+return 301 https://zabbix.semernya.ru$request_uri;
 }
-
 server {
     listen 443 ssl;
     server_name  zabbix.semernya.ru;
@@ -29,12 +27,12 @@ server {
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 
 location / {
-    proxy_pass http://zabbix;
+    proxy_pass http://zabbix/zabbix/;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-for $remote_addr;
     #port_in_redirect off;
-    proxy_redirect http://zabbix/ /;
+    proxy_redirect http://zabbix/zabbix/ /;
     proxy_connect_timeout 600;
 
     }
