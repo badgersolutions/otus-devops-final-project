@@ -1,0 +1,10 @@
+---
+- name: mongo-slave-install
+  include: mongo-slave-install.yml
+  tags:
+   - mongo-slave-install
+
+- name: mongo-repl-set
+  include: mongo-repl-set.yml
+  tags:
+   - mongo-repl-set

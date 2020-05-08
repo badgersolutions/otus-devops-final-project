@@ -1,0 +1,6 @@
+---
+- name: elasticsearch restart
+  service: name=elasticsearch state=restarted
+
+- name: kibana restart
+  service: name=kibana state=restarted

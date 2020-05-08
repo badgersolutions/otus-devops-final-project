@@ -1,0 +1,24 @@
+- name: 1. Ubuntu. Update packages
+  apt:
+    update_cache: yes
+
+- name: 2. Ubuntu. Insatll nfs server
+  apt:
+    name: 
+      - nfs-kernel-server
+      - nfs-common
+
+- name: 3. Ubuntu. Create shared folder
+  file:
+    path: /mnt/data
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: 0755
+
+- name: 4. Ubuntu. Copy exports file.
+  template:
+    src: exports.j2
+    dest: /etc/exports
+  notify: reload nfs
+  

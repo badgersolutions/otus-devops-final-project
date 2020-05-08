@@ -1,0 +1,23 @@
+- name: 0. Ubuntu. Copy limits.conf
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.conf
+    mode: 0644
+  ignore_errors: yes
+  notify: elasticsearch restart
+
+- name: 1. Ubuntu. Copy jvm.options
+  template:
+    src: jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options
+    mode: 0660
+  ignore_errors: yes
+  notify: elasticsearch restart
+
+- name: 2. Ubuntu. Copy elasticsearch.yml
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    mode: 0660
+  ignore_errors: yes
+  notify: elasticsearch restart

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbine-stream-service
+  namespace: stage
+  labels:
+    app: turbine-stream-service
+    sub: stage-app
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: turbine-stream-service
+      sub: stage-app
+  template:
+    metadata:
+      labels:
+        app: turbine-stream-service
+        sub: stage-app
+    spec:
+      containers:
+        - name: turbine-stream-service
+          image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_turbine-stream-service:1.0
+          env:
+          - name: CONFIG_SERVICE_PASSWORD
+            value: SecureP@ssw0rd
+      imagePullSecrets:
+        - name: github-pkg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: turbine-stream-service
+  namespace: stage
+  labels:
+    app: turbine-stream-service
+spec:
+  ports:
+  - protocol: TCP
+    port: 8989
+    targetPort: 8989
+  selector:
+    app: turbine-stream-service
+    sub: stage-app
