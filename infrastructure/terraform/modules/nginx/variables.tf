@@ -1,3 +1,8 @@
+
+
+variable region {
+  default = "europe-west1"
+}
 variable zone1 {
   description = "Zone"
   default = "europe-west1-b"
@@ -39,4 +44,37 @@ variable network {
 
 variable subnetwork {
     description = "Subnetwork to which attach vm"
+}
+
+####  HTTP LOAD BALANCER ####
+
+variable hc_check_interval_sec {
+    default = 10
+}
+
+variable hc_timeout_sec {
+    default = 5
+}
+
+variable health_check_port {
+    default = 80
+}
+variable forwarding_rule_port_range {
+    default = "80"
+}
+####  HTTPS LOAD BALANCER ####
+
+variable hc_check_interval_sec_https {
+    default = 10
+}
+
+variable hc_timeout_sec_https {
+    default = 5
+}
+
+variable health_check_port_https {
+    default = 443
+}
+variable forwarding_rule_port_range_https {
+    default = "443"
 }

@@ -1,4 +1,5 @@
 resource "google_compute_instance" "n1-monitoring-vs" {
+  allow_stopping_for_update = true
   name = var.vm_name
   #hostname = var.hostname
   machine_type = "custom-2-4096"
@@ -15,9 +16,8 @@ resource "google_compute_instance" "n1-monitoring-vs" {
     network = var.network
     subnetwork = var.subnetwork
     network_ip = "10.0.1.11"
-    access_config {
-      nat_ip = google_compute_address.mon_ip.address
-    }
+
+
   }
   metadata = {
     ssh-keys = "svc_terraform:${file(var.public_key_path)}"
@@ -25,11 +25,12 @@ resource "google_compute_instance" "n1-monitoring-vs" {
 
   connection {
     type  = "ssh"
-    host  = self.network_interface[0].access_config[0].nat_ip
+    host  = self.network_interface[0].network_ip
     user  = "svc_terraform"
     agent = false
-    # путь до приватного ключа
     private_key = file(var.private_key_path)
+
+    bastion_host = var.bastion_host
   }
 
   provisioner "remote-exec" {
@@ -48,6 +49,3 @@ resource "google_compute_instance" "n1-monitoring-vs" {
 
 }
 
-resource "google_compute_address" "mon_ip" {
-  name = "monitoring-ip"
-}

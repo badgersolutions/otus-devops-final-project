@@ -40,3 +40,5 @@ variable network {
 variable subnetwork {
     description = "Subnetwork to which attach vm"
 }
+
+

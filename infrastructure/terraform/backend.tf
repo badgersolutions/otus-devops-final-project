@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "piggy-storage-bucket"
+    bucket = "storage-bucket-terra"
     prefix = "terraform/state/"
   }
 }

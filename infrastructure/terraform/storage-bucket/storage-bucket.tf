@@ -11,7 +11,7 @@ module "storage-bucket" {
   source  = "SweetOps/storage-bucket/google"
   version = "0.3.0"
   location = var.region
-  name = "piggy-storage-bucket"
+  name = "storage-bucket-terra"
 }
 
 output storage-bucket_url {

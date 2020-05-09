@@ -3,7 +3,7 @@ resource "google_compute_instance" "n1-nginx-vs" {
   #hostname = "n1.nginx.vs"
   machine_type = "custom-1-4096"
   zone = var.zone1
-  tags = ["nginx"]
+  tags = ["nginx", "http-server", "https-server"]
   boot_disk {
     initialize_params {
       image = var.disk_image
@@ -15,6 +15,9 @@ resource "google_compute_instance" "n1-nginx-vs" {
     network = var.network
     subnetwork = var.subnetwork
     network_ip = "10.0.1.21"
+
+  access_config {
+    }
 
   }
   metadata = {
@@ -50,7 +53,7 @@ resource "google_compute_instance" "n2-nginx-vs" {
   #hostname = "n2.nginx.vs"
   machine_type = "custom-1-4096"
   zone = var.zone2
-  tags = ["nginx"]
+  tags = ["nginx", "http-server", "https-server"]
   boot_disk {
     initialize_params {
       image = var.disk_image
@@ -63,6 +66,8 @@ resource "google_compute_instance" "n2-nginx-vs" {
     subnetwork = var.subnetwork
     network_ip = "10.0.1.22"
 
+  access_config {
+    }
   }
   metadata = {
     ssh-keys = "svc_terraform:${file(var.public_key_path)}"

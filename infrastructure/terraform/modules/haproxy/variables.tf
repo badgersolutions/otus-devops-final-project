@@ -40,3 +40,20 @@ variable network {
 variable subnetwork {
     description = "Subnetwork to which attach vm"
 }
+
+#### LOAD BALANCER ####
+
+variable hc_check_interval_sec {
+    default = 10
+}
+
+variable hc_timeout_sec {
+    default = 5
+}
+
+variable health_check_port {
+    default = 27017
+}
+variable hap-mongo-lb-address {
+    default = "10.0.1.9"
+}
