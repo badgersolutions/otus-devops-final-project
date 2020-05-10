@@ -35,10 +35,7 @@ resource "google_compute_instance" "n1-logging-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname n1.logging.vs"]

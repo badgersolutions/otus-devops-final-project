@@ -36,10 +36,7 @@ resource "google_compute_instance" "n1-haproxy-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname n1.haproxy.vs"]
   }
@@ -84,10 +81,7 @@ resource "google_compute_instance" "n2-haproxy-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname n2.haproxy.vs"]

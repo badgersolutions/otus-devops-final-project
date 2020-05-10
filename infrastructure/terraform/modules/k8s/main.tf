@@ -37,10 +37,7 @@ resource "google_compute_instance" "hap1-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname hap1.k8s.vs"]
@@ -87,10 +84,7 @@ resource "google_compute_instance" "hap2-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname hap2.k8s.vs"]
@@ -136,10 +130,7 @@ resource "google_compute_instance" "mn1-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname mn1.k8s.vs"]
@@ -184,10 +175,7 @@ resource "google_compute_instance" "mn2-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname mn2.k8s.vs"]
   }
@@ -231,10 +219,7 @@ resource "google_compute_instance" "mn3-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname mn3.k8s.vs"]
@@ -280,10 +265,7 @@ resource "google_compute_instance" "wn1-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname wn1.k8s.vs"]
   }
@@ -328,10 +310,7 @@ resource "google_compute_instance" "wn2-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname wn2.k8s.vs"]
@@ -377,10 +356,7 @@ resource "google_compute_instance" "wn3-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname wn3.k8s.vs"]
@@ -423,10 +399,7 @@ resource "google_compute_instance" "nfs1-k8s-vs" {
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
     ]
   }
-  provisioner "remote-exec" {
-    script     = "./files/permit_rootlogin.sh"
-    on_failure = continue
-  }
+ 
 
   provisioner "remote-exec" {
     inline = ["sudo hostnamectl set-hostname nfs1.k8s.vs"]
