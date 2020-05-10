@@ -12,6 +12,7 @@ target/
 
 # Secrets
 .env
+*.key
 
 # Terraform
 *.tfstate

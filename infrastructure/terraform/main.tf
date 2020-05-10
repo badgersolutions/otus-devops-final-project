@@ -10,6 +10,15 @@ provider "google" {
   project = var.project
   region  = var.region
 }
+provider "google-beta" {
+  # Версия провайдера
+  version = "~> 2.5"
+  # ID проекта
+  project = var.project
+  region  = var.region
+}
+
+
 
 resource "google_compute_network" "piggy-network" {
   name                    = "piggy-network"
@@ -21,6 +30,25 @@ resource "google_compute_subnetwork" "piggy-int-subnetwork" {
   ip_cidr_range = "10.0.1.0/26"
   region        = var.region
   network       = google_compute_network.piggy-network.self_link
+}
+resource "google_compute_router" "piggy-router" {
+  name    = "piggy-router"
+  region  = google_compute_subnetwork.piggy-int-subnetwork.region
+  network = google_compute_network.piggy-network.self_link
+
+}
+
+resource "google_compute_router_nat" "piggy-nat" {
+  name                               = "piggy-router-nat"
+  router                             = google_compute_router.piggy-router.name
+  region                             = google_compute_router.piggy-router.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+
+  log_config {
+    enable = true
+    filter = "ERRORS_ONLY"
+  }
 }
 
 resource "google_compute_firewall" "firewall_ssh" {
@@ -52,6 +80,29 @@ resource "google_compute_firewall" "firewall_internal" {
   source_ranges = [google_compute_subnetwork.piggy-int-subnetwork.ip_cidr_range]
 }
 
+resource "google_compute_firewall" "piggy-allow-healthcheck" {
+  name        = "piggy-allow-healthcheck"
+  description = "Allow google health-checks traffic on the piggy network"
+  network     = google_compute_network.piggy-network.name
+  allow {
+    protocol = "all"
+  }
+
+
+  source_ranges = ["130.211.0.0/22", "35.191.0.0/16"]
+}
+
+resource "google_compute_firewall" "firewall_http" {
+  name    = "allow-http"
+  network = google_compute_network.piggy-network.name
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+  source_ranges = var.source_ranges_allow_http
+  target_tags   = ["http-server", "https-server", "nginx"]
+}
+
 resource "google_compute_instance" "bastion-vs" {
   name         = "bastion-vs"
   hostname     = "bastion.vs"
@@ -74,7 +125,7 @@ resource "google_compute_instance" "bastion-vs" {
     }
   }
   metadata = {
-    ssh-keys = "svc_terraform:${file(var.public_key_path)}\nilyasemernya:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAF3EbKWauwXdhywSGi2cB5Zj0drZsjulqX4D82hwTESVz6P/qe5DZVOVUQNLNL//ihrCMS2kR7jCTFwP1QJdAaZiMhAcbA9P1YIOtzh8Qa69KLY1y4mWzXOg+Ukn3ZvhJLEtgVG7df6a91vxapZHgxzzfvcZXbnkxjGw4+RqRKJ4yRJEUD3FAsJyRGEoj7M3QEQ1w1Yx10uUefsY5AbFD8bmz4HgRGpmPWEY0o7cpHl6wEBA2RiRIguluCXKiRz9vLIDLwNh54grBPXvJzPT5zDqITGk+JLb1ulU47Y+OtTLfT/IiJVXF7kCG3xaE3VI2G/ViXwgoXIwqQSYBTYqVY8=\nilyasemernya:ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLWKJCRhaeIx++EH5E1nRR87pra0qY8qSuXL4WIrMvuvMdGBo5yO8aEAeANR0AJsoaj1qJV6MGIhyJaI7Ja0cRM= "
+    ssh-keys = "svc_terraform:${file(var.public_key_path)}"
   }
 
   connection {
@@ -111,10 +162,9 @@ module "monitoring" {
   root_enc_pass    = var.root_enc_pass
   # Раскомментировать, когда можно будет закрыть фаерволл
   #firewall_zab_source_ranges = google_compute_subnetwork.piggy-int-subnetwork.ip_cidr_range
-  bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
-
+  bastion_host = google_compute_address.bastion_ip.address
+  network      = google_compute_network.piggy-network.name
+  subnetwork   = google_compute_subnetwork.piggy-int-subnetwork.name
 }
 
 module "k8s" {
@@ -130,8 +180,9 @@ module "k8s" {
   private_key_path = var.private_key_path
   root_enc_pass    = var.root_enc_pass
   bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
+  network          = google_compute_network.piggy-network.name
+  subnetwork       = google_compute_subnetwork.piggy-int-subnetwork.name
+
 
 }
 
@@ -144,9 +195,12 @@ module "logging" {
   private_key_path = var.private_key_path
   root_enc_pass    = var.root_enc_pass
   bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
+  network          = google_compute_network.piggy-network.name
+  subnetwork       = google_compute_subnetwork.piggy-int-subnetwork.name
+
+
 }
+
 module "nginx" {
   source           = "./modules/nginx"
   zone1            = var.zone1
@@ -157,8 +211,10 @@ module "nginx" {
   private_key_path = var.private_key_path
   root_enc_pass    = var.root_enc_pass
   bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
+  network          = google_compute_network.piggy-network.name
+  subnetwork       = google_compute_subnetwork.piggy-int-subnetwork.name
+
+
 
 }
 
@@ -172,8 +228,9 @@ module "haproxy" {
   private_key_path = var.private_key_path
   root_enc_pass    = var.root_enc_pass
   bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
+  network          = google_compute_network.piggy-network.name
+  subnetwork       = google_compute_subnetwork.piggy-int-subnetwork.name
+
 
 }
 module "mongo" {
@@ -186,7 +243,10 @@ module "mongo" {
   private_key_path = var.private_key_path
   root_enc_pass    = var.root_enc_pass
   bastion_host     = google_compute_address.bastion_ip.address
-  network = google_compute_network.piggy-network.name
-  subnetwork = google_compute_subnetwork.piggy-int-subnetwork.name
+  network          = google_compute_network.piggy-network.name
+  subnetwork       = google_compute_subnetwork.piggy-int-subnetwork.name
+
 
 }
+
+

@@ -36,6 +36,11 @@ variable zone3 {
   description = "zone3"
   default     = "europe-west1-d"
 }
+variable source_ranges_allow_http {
+  description = "source_ranges allow http traffic"
+  default     = ["0.0.0.0/0"]
+}
+
 
 
 #####################################################
