@@ -8,10 +8,10 @@ provider "google" {
 }
 
 module "storage-bucket" {
-  source  = "SweetOps/storage-bucket/google"
-  version = "0.3.0"
+  source   = "SweetOps/storage-bucket/google"
+  version  = "0.3.0"
   location = var.region
-  name = "storage-bucket-terra"
+  name     = "storage-bucket-terra"
 }
 
 output storage-bucket_url {

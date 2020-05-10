@@ -3,8 +3,8 @@ resource "google_compute_instance_group" "hap1-mongo" {
   zone = var.zone1
 
   instances = [
-      google_compute_instance.n1-haproxy-vs.self_link
-      ]
+    google_compute_instance.n1-haproxy-vs.self_link
+  ]
 
 }
 resource "google_compute_instance_group" "hap2-mongo" {
@@ -12,15 +12,15 @@ resource "google_compute_instance_group" "hap2-mongo" {
   zone = var.zone2
 
   instances = [
-      google_compute_instance.n2-haproxy-vs.self_link
-      ]
+    google_compute_instance.n2-haproxy-vs.self_link
+  ]
 
 }
 
 resource "google_compute_region_backend_service" "hap-mongo-backend" {
-  provider = google-beta
-  name = "hap-mongo-backend"
-  region = "europe-west1"
+  provider              = google-beta
+  name                  = "hap-mongo-backend"
+  region                = "europe-west1"
   load_balancing_scheme = "INTERNAL"
 
   backend {
@@ -28,7 +28,7 @@ resource "google_compute_region_backend_service" "hap-mongo-backend" {
   }
 
   backend {
-    group = google_compute_instance_group.hap2-mongo.self_link
+    group    = google_compute_instance_group.hap2-mongo.self_link
     failover = true
   }
 
@@ -51,20 +51,20 @@ resource "google_compute_health_check" "hc-mongo-27017" {
 
 
 resource "google_compute_address" "hap-mongo-address" {
-  name = "hap-mongo-address"
+  name         = "hap-mongo-address"
   address_type = "INTERNAL"
-  address = var.hap-mongo-lb-address
-  subnetwork = var.subnetwork
+  address      = var.hap-mongo-lb-address
+  subnetwork   = var.subnetwork
 }
 
 resource "google_compute_forwarding_rule" "hap-mongo-fr" {
-  provider = google-beta
-  name       = "hap-mongo-fr"
+  provider              = google-beta
+  name                  = "hap-mongo-fr"
   load_balancing_scheme = "INTERNAL"
-  backend_service     = google_compute_region_backend_service.hap-mongo-backend.self_link
-  ip_address = google_compute_address.hap-mongo-address.address
-  all_ports = true
-  network = var.network
-  subnetwork = var.subnetwork
+  backend_service       = google_compute_region_backend_service.hap-mongo-backend.self_link
+  ip_address            = google_compute_address.hap-mongo-address.address
+  all_ports             = true
+  network               = var.network
+  subnetwork            = var.subnetwork
 }
 

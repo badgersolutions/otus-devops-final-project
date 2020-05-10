@@ -2,21 +2,21 @@ resource "google_compute_instance" "n1-nginx-vs" {
   name = "n1-nginx-vs"
   #hostname = "n1.nginx.vs"
   machine_type = "custom-1-4096"
-  zone = var.zone1
-  tags = ["nginx", "http-server", "https-server"]
+  zone         = var.zone1
+  tags         = ["nginx", "http-server", "https-server"]
   boot_disk {
     initialize_params {
       image = var.disk_image
-      size = var.disk_size
-      type = var.disk_type
-      }
- }
+      size  = var.disk_size
+      type  = var.disk_type
+    }
+  }
   network_interface {
-    network = var.network
+    network    = var.network
     subnetwork = var.subnetwork
     network_ip = "10.0.1.21"
 
-  access_config {
+    access_config {
     }
 
   }
@@ -25,10 +25,10 @@ resource "google_compute_instance" "n1-nginx-vs" {
   }
 
   connection {
-    type  = "ssh"
-    host  = self.network_interface[0].network_ip
-    user  = "svc_terraform"
-    agent = false
+    type        = "ssh"
+    host        = self.network_interface[0].network_ip
+    user        = "svc_terraform"
+    agent       = false
     private_key = file(var.private_key_path)
 
     bastion_host = var.bastion_host
@@ -37,10 +37,10 @@ resource "google_compute_instance" "n1-nginx-vs" {
   provisioner "remote-exec" {
     inline = [
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
- ]
+    ]
   }
   provisioner "remote-exec" {
-    script = "./files/permit_rootlogin.sh"
+    script     = "./files/permit_rootlogin.sh"
     on_failure = continue
   }
   provisioner "remote-exec" {
@@ -52,21 +52,21 @@ resource "google_compute_instance" "n2-nginx-vs" {
   name = "n2-nginx-vs"
   #hostname = "n2.nginx.vs"
   machine_type = "custom-1-4096"
-  zone = var.zone2
-  tags = ["nginx", "http-server", "https-server"]
+  zone         = var.zone2
+  tags         = ["nginx", "http-server", "https-server"]
   boot_disk {
     initialize_params {
       image = var.disk_image
-      size = var.disk_size
-      type = var.disk_type
-      }
- }
+      size  = var.disk_size
+      type  = var.disk_type
+    }
+  }
   network_interface {
-    network = var.network
+    network    = var.network
     subnetwork = var.subnetwork
     network_ip = "10.0.1.22"
 
-  access_config {
+    access_config {
     }
   }
   metadata = {
@@ -74,10 +74,10 @@ resource "google_compute_instance" "n2-nginx-vs" {
   }
 
   connection {
-    type  = "ssh"
-    host  = self.network_interface[0].network_ip
-    user  = "svc_terraform"
-    agent = false
+    type        = "ssh"
+    host        = self.network_interface[0].network_ip
+    user        = "svc_terraform"
+    agent       = false
     private_key = file(var.private_key_path)
 
     bastion_host = var.bastion_host
@@ -86,15 +86,15 @@ resource "google_compute_instance" "n2-nginx-vs" {
   provisioner "remote-exec" {
     inline = [
       "echo 'root:${var.root_enc_pass}'  | sudo chpasswd -e"
- ]
+    ]
   }
   provisioner "remote-exec" {
-    script = "./files/permit_rootlogin.sh"
+    script     = "./files/permit_rootlogin.sh"
     on_failure = continue
   }
 
   provisioner "remote-exec" {
-  inline = ["sudo hostnamectl set-hostname n2.nginx.vs"]
-}
+    inline = ["sudo hostnamectl set-hostname n2.nginx.vs"]
+  }
 
 }

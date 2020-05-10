@@ -3,8 +3,8 @@ resource "google_compute_instance_group" "n1-nginx" {
   zone = var.zone1
 
   instances = [
-      google_compute_instance.n1-nginx-vs.self_link
-      ]
+    google_compute_instance.n1-nginx-vs.self_link
+  ]
 
   named_port {
     name = "http"
@@ -19,11 +19,11 @@ resource "google_compute_instance_group" "n1-nginx" {
 }
 resource "google_compute_instance_group" "n2-nginx" {
   name = "n2-nginx"
-  zone = var.zone2 
+  zone = var.zone2
 
   instances = [
-      google_compute_instance.n2-nginx-vs.self_link
-      ]
+    google_compute_instance.n2-nginx-vs.self_link
+  ]
 
   named_port {
     name = "http"
@@ -38,20 +38,19 @@ resource "google_compute_instance_group" "n2-nginx" {
 }
 
 resource "google_compute_address" "nginx-http-lb-address" {
-  name = "nginx-http-lb-address"
-  address_type =  "EXTERNAL"
-  network_tier =  "STANDARD"
-  region = var.region
+  name         = "nginx-http-lb-address"
+  address_type = "EXTERNAL"
+  network_tier = "STANDARD"
+  region       = var.region
 }
 
 ###### HTTP LOADBALANCER ######
 
 resource "google_compute_backend_service" "nginx-http-backend" {
-  name = "nginx-http-backend"
-  protocol = "HTTP"
+  name                  = "nginx-http-backend"
+  protocol              = "HTTP"
   load_balancing_scheme = "EXTERNAL"
-  port_name = "http"
-  #network = var.network
+  port_name             = "http"
   backend {
     group = google_compute_instance_group.n1-nginx.self_link
   }
@@ -88,22 +87,20 @@ resource "google_compute_target_http_proxy" "nginx-http-lb-target-proxy" {
 
 
 resource "google_compute_forwarding_rule" "nginx-http-lb-fr" {
-  #provider = google-beta
   name       = "nginx-http-lb-fr"
   target     = google_compute_target_http_proxy.nginx-http-lb-target-proxy.self_link
   ip_address = google_compute_address.nginx-http-lb-address.address
   port_range = var.forwarding_rule_port_range
-  region = var.region
+  region     = var.region
 }
 
 ###### HTTPS LOADBALANCER ######
 
 resource "google_compute_backend_service" "nginx-https-lb-backend" {
-  name = "nginx-https-lb-backend"
-  protocol = "HTTPS"
+  name                  = "nginx-https-lb-backend"
+  protocol              = "HTTPS"
   load_balancing_scheme = "EXTERNAL"
-  port_name = "https"
-  #network = var.network
+  port_name             = "https"
   backend {
     group = google_compute_instance_group.n1-nginx.self_link
   }
@@ -133,32 +130,27 @@ resource "google_compute_url_map" "nginx-https-lb" {
 }
 
 resource "google_compute_target_https_proxy" "nginx-https-lb-target-proxy" {
-  name    = "nginx-https-lb-target-proxy"
-  url_map = google_compute_url_map.nginx-https-lb.self_link
+  name             = "nginx-https-lb-target-proxy"
+  url_map          = google_compute_url_map.nginx-https-lb.self_link
   ssl_certificates = [google_compute_ssl_certificate.semernya-cert.self_link]
 }
 
 
 
 resource "google_compute_forwarding_rule" "nginx-https-lb-fr" {
-  #provider = google-beta
-  name       = "nginx-https-lb-fr"
+  name                  = "nginx-https-lb-fr"
   load_balancing_scheme = "EXTERNAL"
-  network_tier = "STANDARD"
-  target     = google_compute_target_https_proxy.nginx-https-lb-target-proxy.self_link
-  ip_address = google_compute_address.nginx-http-lb-address.address
-  port_range = var.forwarding_rule_port_range_https
-  region = var.region
+  network_tier          = "STANDARD"
+  target                = google_compute_target_https_proxy.nginx-https-lb-target-proxy.self_link
+  ip_address            = google_compute_address.nginx-http-lb-address.address
+  port_range            = var.forwarding_rule_port_range_https
+  region                = var.region
 }
 
 resource "google_compute_ssl_certificate" "semernya-cert" {
-  name = "semernya-cert"
-  private_key = file("./files/semernya.key")
-  certificate = file("./files/bundle.semernya.crt")
+  name        = "semernya-cert"
+  private_key = file(var.ssl_private_key_path)
+  certificate = file(var.ssl_cert_path)
 
-  #lifecycle {
-  #  create_before_destroy = true
-  #}
-#
   timeouts {}
 }

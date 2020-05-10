@@ -3,8 +3,8 @@ resource "google_compute_instance_group" "hap1-k8s" {
   zone = var.zone1
 
   instances = [
-      google_compute_instance.hap1-k8s-vs.self_link
-      ]
+    google_compute_instance.hap1-k8s-vs.self_link
+  ]
 
 }
 resource "google_compute_instance_group" "hap2-k8s" {
@@ -12,15 +12,15 @@ resource "google_compute_instance_group" "hap2-k8s" {
   zone = var.zone2
 
   instances = [
-      google_compute_instance.hap2-k8s-vs.self_link
-      ]
+    google_compute_instance.hap2-k8s-vs.self_link
+  ]
 
 }
 
 resource "google_compute_region_backend_service" "hap-k8s-backend" {
-  provider = google-beta
-  name = "hap-k8s-backend"
-  region = "europe-west1"
+  provider              = google-beta
+  name                  = "hap-k8s-backend"
+  region                = "europe-west1"
   load_balancing_scheme = "INTERNAL"
   #network = var.network
 
@@ -29,7 +29,7 @@ resource "google_compute_region_backend_service" "hap-k8s-backend" {
   }
 
   backend {
-    group = google_compute_instance_group.hap2-k8s.self_link
+    group    = google_compute_instance_group.hap2-k8s.self_link
     failover = true
   }
 
@@ -61,20 +61,20 @@ resource "google_compute_health_check" "hc-hap-6443" {
 #}
 
 resource "google_compute_address" "hap-k8s-address" {
-  name = "hap-k8s-address"
+  name         = "hap-k8s-address"
   address_type = "INTERNAL"
-  address = var.hap-k8s-lb-address
-  subnetwork = var.subnetwork
+  address      = var.hap-k8s-lb-address
+  subnetwork   = var.subnetwork
 }
 
 resource "google_compute_forwarding_rule" "hap-k8s-fr" {
-  provider = google-beta
-  name       = "hap-k8s-fr"
+  provider              = google-beta
+  name                  = "hap-k8s-fr"
   load_balancing_scheme = "INTERNAL"
-  backend_service     = google_compute_region_backend_service.hap-k8s-backend.self_link
-  ip_address = google_compute_address.hap-k8s-address.address
-  all_ports = true
-  network = var.network
-  subnetwork = var.subnetwork
+  backend_service       = google_compute_region_backend_service.hap-k8s-backend.self_link
+  ip_address            = google_compute_address.hap-k8s-address.address
+  all_ports             = true
+  network               = var.network
+  subnetwork            = var.subnetwork
 }
 
