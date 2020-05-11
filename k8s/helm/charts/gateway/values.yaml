@@ -14,7 +14,7 @@ imagePullSecrets:
   - name: github-pkg
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "stage-app-gateway-svc"
 
 serviceAccount:
   # Specifies whether a service account should be created
