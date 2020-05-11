@@ -31,5 +31,5 @@ data:
         require_tls: false
     - name: slack
       slack_configs:
-      - api_url: https://hooks.slack.com/services/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
+      - api_url: https://hooks.slack.com/services/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
         channel: '#devops-project-team-notifications'
