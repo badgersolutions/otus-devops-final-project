@@ -16,8 +16,8 @@ resource "google_compute_instance" "n1-nginx-vs" {
     subnetwork = var.subnetwork
     network_ip = "10.0.1.21"
 
-    access_config {
-    }
+  #  access_config {
+  #  }
 
   }
   metadata = {
@@ -63,8 +63,8 @@ resource "google_compute_instance" "n2-nginx-vs" {
     subnetwork = var.subnetwork
     network_ip = "10.0.1.22"
 
-    access_config {
-    }
+  #  access_config {
+  #  }
   }
   metadata = {
     ssh-keys = "svc_terraform:${file(var.public_key_path)}"
