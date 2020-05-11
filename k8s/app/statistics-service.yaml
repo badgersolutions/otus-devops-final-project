@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: statistics-service
-  namespace: stage
+  namespace: develop
   labels:
     app: statistics-service
     sub: stage-app
@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: statistics-service
-  namespace: stage
+  namespace: develop
   labels:
     app: statistics-service
 spec:

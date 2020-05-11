@@ -13,7 +13,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config:1.0
     restart: always
     logging:
       options:
@@ -23,7 +23,7 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_registry:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_registry:1.0
     restart: always
     depends_on:
       config:
@@ -38,7 +38,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_gateway:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_gateway:1.0
     restart: always
     depends_on:
       config:
@@ -57,7 +57,7 @@ services:
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_auth-service:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_auth-service:1.0
     restart: always
     depends_on:
       config:
@@ -70,7 +70,7 @@ services:
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:1.0
     restart: always
     logging:
       options:
@@ -82,7 +82,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_account-service:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_account-service:1.0
     restart: always
     depends_on:
       config:
@@ -96,7 +96,7 @@ services:
     environment:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:1.0
     restart: always
     logging:
       options:
@@ -108,7 +108,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_statistics-service:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_statistics-service:1.0
     restart: always
     depends_on:
       config:
@@ -121,7 +121,7 @@ services:
   statistics-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:1.0
     restart: always
     logging:
       options:
@@ -133,7 +133,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_notification-service:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_notification-service:1.0
     restart: always
     depends_on:
       config:
@@ -144,7 +144,7 @@ services:
         max-file: "10"
 
   notification-mongodb:
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_mongodb:1.0
     restart: always
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
@@ -156,7 +156,7 @@ services:
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_monitoring:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_monitoring:1.0
     restart: always
     depends_on:
       config:
@@ -171,7 +171,7 @@ services:
   turbine-stream-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_turbine-stream-service:latest
+    image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_turbine-stream-service:1.0
     restart: always
     depends_on:
       config:

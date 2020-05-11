@@ -1,9 +1,0 @@
-dependencies:
-- name: gateway
-  repository: file://../gateway
-  version: 0.1.0
-- name: config
-  repository: file://../config
-  version: 0.1.0
-digest: sha256:92b89719ec3e71bb57b2aebed1dd277e973e60796985c2416e45647d8405443f
-generated: "2020-05-11T14:09:00.253269+03:00"
