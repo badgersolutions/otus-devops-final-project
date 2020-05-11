@@ -34,6 +34,6 @@ jobs:
         PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         REGISTRY: "docker.pkg.github.com"
         DOCKERFILE: "src/config/Dockerfile"
-        IMAGE_NAME: "docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config"
+        IMAGE_NAME: "piggymetrics_config"
         TAG_NAME: "develop"
         LATEST: "true"
