@@ -1,5 +1,5 @@
 apiVersion: v2
-name: piggymetrics
+name: registry
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -21,20 +21,3 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.0.0
-
-### A list of maintainers
-maintainers:
-  - name: Denis B
-    email: job.dbarsukov@gmail.com
-
-# A list of the chart requirements
-dependencies:
-  - name: gateway
-    version: 0.1.0
-    repository: "file://../gateway"
-  - name: config
-    version: 0.1.0
-    repository: "file://../config"
-  - name: registry
-    version: 0.1.0
-    repository: "file://../registry"

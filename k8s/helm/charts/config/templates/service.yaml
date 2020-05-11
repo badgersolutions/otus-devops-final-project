@@ -8,8 +8,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: 8888
       protocol: TCP
-      name: http
   selector:
     {{- include "config.selectorLabels" . | nindent 4 }}
