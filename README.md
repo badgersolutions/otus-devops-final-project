@@ -30,7 +30,7 @@ OTUS DevOps Course final project
 
 ![Image of infrastructure](docs/infra.jpg)
 
- - [Мониторинг](zabbix.semernya.ru)
+ - [Мониторинг](http://zabbix.semernya.ru)
  - [Тестовое прилоджение в кубере](test.semernya.ru)
  - [Логирование](kibana.semernya.ru)
  - [HAProxy на кубер](http://hapk8s.semernya.ru/ )
