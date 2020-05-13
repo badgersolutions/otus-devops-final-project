@@ -38,3 +38,11 @@ output "wn2_k8s_internal_ip" {
 output "wn3_k8s_internal_ip" {
   value = google_compute_instance.hap1-k8s-vs.network_interface[0].network_ip
 }
+
+output "hap_k8s_lb_ip" {
+  value = google_compute_forwarding_rule.hap-k8s-fr.ip_address
+}
+
+output "k8s-ingress" {
+  value = google_compute_forwarding_rule.k8s-ingress.ip_address
+}

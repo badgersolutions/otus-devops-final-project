@@ -1,0 +1,51 @@
+   - name: 0. Ubuntu. Update all packages to the present version
+     apt:
+       name: '*'
+       state: present  
+       update_cache: yes
+
+
+   - name: 1. Ubuntu. Install a list of packages
+     apt:
+       name:
+         - gnupg
+         - net-tools
+         - mc
+         - nano
+         - wget
+         - curl
+         - jq  
+         - vim
+         - bash-completion
+         - rsync
+         - ntp
+         - sysstat
+         - iotop
+         - htop
+         - nmap
+         - tree
+         - traceroute
+         - ntp
+         - python
+         - python-apt
+         - libnss-resolve
+         - nfs-common
+       state: present
+     ignore_errors: yes
+
+   - name: 2. Ubuntu. Enable services
+     systemd:
+       name: ntp
+       state: started
+       enabled: yes
+
+   - name: 3. Ubuntu. Set timezone to Europe/Moscow
+     timezone:
+       name: Europe/Moscow
+     notify: restart ntp
+
+   - name: 4. Ubuntu. Disable firewall UFW
+     systemd:
+       name: ufw
+       state: stopped
+       enabled: no

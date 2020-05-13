@@ -1,0 +1,11 @@
+---
+- name: 0. Ubuntu. Copy HAProxy configuration
+  template:
+    src: "{{ item }}"
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+    backup: no
+    validate: haproxy -f %s -c -V
+  with_fileglob:
+    - templates/haproxy/haproxy.cfg.j2
+  notify: reload haproxy

@@ -11,5 +11,5 @@ resource "google_compute_firewall" "firewall_ssh" {
 
 
   source_ranges = var.firewall_zab_source_ranges
-  target_tags = ["monitoring"]
+  target_tags   = ["monitoring"]
 }

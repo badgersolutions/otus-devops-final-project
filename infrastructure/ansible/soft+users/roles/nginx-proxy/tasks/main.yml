@@ -1,0 +1,15 @@
+---
+- name: nginx-install
+  include: nginx-install.yml
+  tags:
+   - nginx-install
+
+- name: nginx-ssl
+  include: nginx-ssl.yml
+  tags:
+    - nginx-ssl
+
+- name: nginx-config
+  include: nginx-config.yml
+  tags:
+    - nginx-config

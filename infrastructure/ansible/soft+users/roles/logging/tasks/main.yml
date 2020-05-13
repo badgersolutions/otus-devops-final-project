@@ -1,0 +1,35 @@
+---
+- name: config system ubuntu
+  include: config_system.yml
+  tags: 
+    - elk_system_config
+
+- name: install_es ubuntu
+  include: install_es.yml
+  tags: 
+    - es_install
+
+- name: config_es ubuntu
+  include: config_es.yml
+  tags: 
+    - es_config
+
+- name: start_es ubuntu
+  include: start_es.yml
+  tags: 
+   - es_start
+
+- name: install_kibana ubuntu
+  include: install_kibana.yml
+  tags: 
+    - kibana_install
+
+- name: config_kibana ubuntu
+  include: config_kibana.yml
+  tags: 
+    - kibana_config
+
+- name: start_kibana ubuntu
+  include: start_kibana.yml
+  tags: 
+   - kibana_start

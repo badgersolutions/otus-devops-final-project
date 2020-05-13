@@ -1,0 +1,10 @@
+---
+- name: add users ubuntu
+  include: add_users_ubuntu.yml
+  tags: 
+    - users_add
+
+- name: enable_fqdn
+  include: enable_fqdn.yml
+  tags: 
+    - fqdn

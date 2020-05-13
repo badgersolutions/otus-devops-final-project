@@ -1,0 +1,88 @@
+user www-data;
+worker_processes 10;
+pid /run/nginx.pid;
+	
+include /etc/nginx/modules-enabled/50-mod-stream.conf;
+	worker_rlimit_nofile 40960;
+
+events {
+	worker_connections 20000;
+	use epoll;
+	multi_accept off;
+#	accept_mutex off;
+}
+
+http {
+
+	##
+	# Basic Settings
+	##
+
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 30;
+	keepalive_requests 1000;
+
+
+	types_hash_max_size 2048;
+        client_max_body_size 512M;
+        send_timeout 999999;
+        proxy_read_timeout 999999;
+
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	##
+	# SSL Settings
+	##
+
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+	log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+	
+	log_format  main_up  '$remote_addr - $remote_user [$time_local] [$request_time] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$upstream_addr"';
+	
+	log_format  logpost '$remote_addr [$time_local] $request_time $request_method "$request" $request_body "$http_host" ';
+
+        log_format  reqtime  '$remote_addr - $remote_user [$time_local] [$request_time] "$request" '
+                      '$status $body_bytes_sent $request_length "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" "$upstream_addr"';
+
+	access_log  /var/log/nginx/access.log  main;
+	error_log  /var/log/nginx/error.log warn;
+
+	##
+	# Gzip Settings
+	##
+
+	gzip on;
+	gzip_disable "msie6";
+	gzip_vary on;
+	gzip_proxied any;
+	gzip_comp_level 6;
+	gzip_buffers 16 8k;
+	gzip_http_version 1.1;
+	gzip_types text/plain text/css application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+	include /etc/nginx/conf.d/*.conf;
+
+	# include /etc/nginx/sites-enabled/*;
+}

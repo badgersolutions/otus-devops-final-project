@@ -1,0 +1,6 @@
+---
+- name: 0. Ubuntu. Copy SSL certs
+  copy: 
+    src: files/ssl
+    dest: /etc/nginx 
+  notify: reload nginx

@@ -1,0 +1,5 @@
+- name: 0. Ubuntu. Get replset_keyfile
+  fetch: 
+    src: /var/lib/mongodb/replset_keyfile
+    dest: ../soft+users/roles/mongo-master/files/
+    flat: yes
