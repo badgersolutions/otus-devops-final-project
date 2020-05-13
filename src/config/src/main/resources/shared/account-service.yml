@@ -10,10 +10,10 @@ security:
 spring:
   data:
     mongodb:
-      host: stage-app-account-mongodb-svc
-      username: user
+      host: ${MONGODB_HOST}
+      username: ${MONGODB_USER}
       password: ${MONGODB_PASSWORD}
-      database: piggymetrics
+      database: ${MONGODB_DATABASE}
       port: 27017
 
 server:

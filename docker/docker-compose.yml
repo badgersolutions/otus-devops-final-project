@@ -56,7 +56,10 @@ services:
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_HOST: $MONGODB_HOST
+      MONGODB_USER: $MONGODB_USER
       MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_DATABASE: ${AUTH_DATABASE}
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_auth-service:1.0
     restart: always
     depends_on:
@@ -81,7 +84,10 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_HOST: $MONGODB_HOST
+      MONGODB_USER: $MONGODB_USER
       MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_DATABASE: ${MONGODB_ACCOUNT_DATABASE}
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_account-service:1.0
     restart: always
     depends_on:
@@ -106,7 +112,10 @@ services:
   statistics-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_HOST: $MONGODB_HOST
+      MONGODB_USER: $MONGODB_USER
       MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_DATABASE: ${STATISTIC_DATABASE}
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_statistics-service:1.0
     restart: always
@@ -131,7 +140,10 @@ services:
   notification-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_HOST: $MONGODB_HOST
+      MONGODB_USER: $MONGODB_USER
       MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_DATABASE: ${NOTIFICATION_DATABASE}
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
     image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_notification-service:1.0
     restart: always
