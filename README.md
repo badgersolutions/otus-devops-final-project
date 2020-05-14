@@ -30,12 +30,12 @@ OTUS DevOps Course final project
 
 ![Image of infrastructure](docs/infra.jpg)
 
- - [Мониторинг](zabbix.semernya.ru)
- - [Тестовое прилоджение в кубере](test.semernya.ru)
- - [Логирование](kibana.semernya.ru)
- - [HAProxy на кубер](http://hapk8s.semernya.ru/ )
- - [HAProxy на БД](hap.semernya.ru)
- - [Alertmanager](alertmanager.semernya.ru)
+ - [Мониторинг](https://zabbix.semernya.ru)
+ - [Тестовое прилоджение в кубере](https://test.semernya.ru)
+ - [Логирование](https://kibana.semernya.ru)
+ - [HAProxy на кубер](https://hapk8s.semernya.ru/ )
+ - [HAProxy на БД](https://hap.semernya.ru)
+ - [Alertmanager](https://alertmanager.semernya.ru)
 
 ### Этапы развития проекта и сроки
 
@@ -71,6 +71,6 @@ OTUS DevOps Course final project
  - Денис Барсуков (PO, Dev, ChatOps, Pipeline)
  - Иван Кучин (Logging, Tracing)
  - Роман Ермолаев (Monitoring)
- - София Цигуро (Terraform)
- - Илья Семерня (Ansible, DNS, K8S)
+ - София Цигуро (Terraform, Network, Grafana)
+ - Илья Семерня (Ansible, DNS, K8S, Monitoring)
  
