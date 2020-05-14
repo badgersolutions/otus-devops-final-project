@@ -71,6 +71,6 @@ OTUS DevOps Course final project
  - Денис Барсуков (PO, Dev, ChatOps, Pipeline)
  - Иван Кучин (Logging, Tracing)
  - Роман Ермолаев (Monitoring)
- - София Цигуро (Terraform)
+ - София Цигуро (Terraform, Network, Grafana)
  - Илья Семерня (Ansible, DNS, K8S)
  
