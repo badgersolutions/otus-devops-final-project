@@ -34,7 +34,7 @@ spec:
           - name: MONGODB_PASSWORD
             value: piggy
           - name: MONGODB_URI
-            value: mongodb://n1.mogodb.vs:27017,n2.mogodb.vs:27017/?replicaSet=mongo_cluster1
+            value: mongodb://10.0.1.26:27017,10.0.1.27:27017/?replicaSet=mongo_cluster1
           - name: MONGODB_USER
             value: piggy
           - name: ACCOUNT_DATABASE

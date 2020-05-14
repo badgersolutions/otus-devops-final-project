@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := info
 
+USER_LOGIN=bard86
+
 info:
 	@echo use command: make [start \| stop \| build \| publish \| infra \| deploy]
 
@@ -11,6 +13,9 @@ stop:
 
 build:
 	cd src && mvn -B clean test package
+
+login:
+	cat ~/GH_TOKEN | docker login docker.pkg.github.com -u $USER_LOGIN --password-stdin
 
 publish:
 	cd docker && ./publish-docker-images-to-github-packages.sh
