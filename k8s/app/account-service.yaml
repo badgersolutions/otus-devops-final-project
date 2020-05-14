@@ -27,12 +27,18 @@ spec:
         - name: account-service
           image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_account-service:1.0
           env:
-          - name: MONGODB_PASSWORD
-            value: SecureP@ssw0rd
           - name: CONFIG_SERVICE_PASSWORD
             value: SecureP@ssw0rd
           - name: ACCOUNT_SERVICE_PASSWORD
             value: SecureP@ssw0rd
+          - name: MONGODB_PASSWORD
+            value: piggy
+          - name: MONGODB_URI
+            value: mongodb://n1.mogodb.vs:27017,n2.mogodb.vs:27017/?replicaSet=mongo_cluster1
+          - name: MONGODB_USER
+            value: piggy
+          - name: ACCOUNT_DATABASE
+            value: account
       imagePullSecrets:
         - name: github-pkg
 ---

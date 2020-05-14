@@ -28,10 +28,10 @@ backup:
 spring:
   data:
     mongodb:
-      host: ${MONGODB_HOST}
+      uri: ${MONGODB_URI}
       username: ${MONGODB_USER}
       password: ${MONGODB_PASSWORD}
-      database: ${MONGODB_DATABASE}
+      database: ${NOTIFICATION_DATABASE}
       port: 27017
   mail:
     host: smtp.gmail.com
