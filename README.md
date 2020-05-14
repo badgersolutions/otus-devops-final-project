@@ -72,5 +72,5 @@ OTUS DevOps Course final project
  - Иван Кучин (Logging, Tracing)
  - Роман Ермолаев (Monitoring)
  - София Цигуро (Terraform, Network, Grafana)
- - Илья Семерня (Ansible, DNS, K8S)
+ - Илья Семерня (Ansible, DNS, K8S, Monitoring)
  
