@@ -1,0 +1,11 @@
+---
+- name: mongo-master-install
+  include: mongo-master-install2.yml
+  tags:
+   - mongo-master-install
+
+- name: mongo-master-keyfile-copy
+  include: mongo-master-keyfile-copy.yml
+  tags:
+   - mongo-master-keyfile-copy
+   

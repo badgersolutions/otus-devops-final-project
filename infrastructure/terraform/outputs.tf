@@ -12,9 +12,6 @@ output "bastion_internal_ip" {
 # Monitoring
 #####################################################
 
-output "mon_external_ip" {
-  value = module.monitoring.mon_external_ip
-}
 
 output "mon_internal_ip" {
   value = module.monitoring.mon_internal_ip
@@ -62,6 +59,12 @@ output "wn2_k8s_internal_ip" {
 output "wn3_k8s_internal_ip" {
   value = module.k8s.wn3_k8s_internal_ip
 }
+output "hap_k8s_lb_ip" {
+  value = module.k8s.hap_k8s_lb_ip
+}
+output "k8s-ingress" {
+  value = module.k8s.k8s-ingress
+}
 
 #####################################################
 # logging
@@ -80,6 +83,10 @@ output "n1-nginx_internal_ip" {
 output "n2-nginx_internal_ip" {
   value = module.nginx.n2-nginx_internal_ip
 }
+
+#output "nginx-http-lb-address" {
+#  value = module.nginx.nginx-http-lb-address
+#}
 #####################################################
 # haproxy
 #####################################################
@@ -90,6 +97,11 @@ output "n1-haproxy_internal_ip" {
 output "n2-haproxy_internal_ip" {
   value = module.haproxy.n2-haproxy_internal_ip
 }
+
+output "hap_mongo_lb_ip" {
+  value = module.haproxy.hap_mongo_lb_ip
+}
+
 #####################################################
 # mongodb
 #####################################################

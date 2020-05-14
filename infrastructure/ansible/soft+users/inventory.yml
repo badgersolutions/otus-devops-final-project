@@ -1,0 +1,60 @@
+---
+all:
+  children:
+    monitoring:
+      hosts:
+        n1.monitoring.vs:
+          ansible_host: 10.0.1.11
+    hap_k8s:
+      hosts:
+        hap1.k8s.vs:
+          ansible_host: 10.0.1.12
+        hap2.k8s.vs:
+          ansible_host: 10.0.1.13
+    mn_k8s:
+      hosts:
+        mn1.k8s.vs:
+          ansible_host: 10.0.1.14
+        mn2.k8s.vs:
+          ansible_host: 10.0.1.15
+        mn3.k8s.vs:
+          ansible_host: 10.0.1.16
+    wn_k8s:
+      hosts:
+        wn1.k8s.vs:
+          ansible_host: 10.0.1.17
+        wn2.k8s.vs:
+          ansible_host: 10.0.1.18
+        wn3.k8s.vs:
+          ansible_host: 10.0.1.19  
+    nfs1_k8s:
+      hosts:
+        nfs1.k8s.vs: 
+          ansible_host: 10.0.1.28
+    logging:
+      hosts:
+        n1.logging.vs: 
+          ansible_host: 10.0.1.20
+    web-proxy: 
+      hosts: 
+        n1.nginx.vs: 
+          ansible_host: 10.0.1.21
+        n2.nginx.vs:
+          ansible_host: 10.0.1.22 
+    bastion:
+      hosts:
+        n1.bst.vs:
+          ansible_host: 10.0.1.23
+    haproxy:
+      hosts: 
+        n1.haproxy.vs:
+          ansible_host: 10.0.1.24
+        n2.haproxy.vs:
+          ansible_host: 10.0.1.25
+
+    mongo: 
+      hosts: 
+        n1.mongodb.vs: 
+          ansible_host: 10.0.1.26
+        n2.mongodb.vs:
+          ansible_host: 10.0.1.27

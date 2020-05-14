@@ -1,15 +1,15 @@
 variable vm_name {
   description = "vm name"
-  default = "n1-logging-vs"
+  default     = "n1-logging-vs"
 }
 variable hostname {
   description = "monitoring vm hostname"
-  default = "n1.logging.vs"
+  default     = "n1.logging.vs"
 }
 
 variable zone {
   description = "Zone"
-  default = "europe-west1-b"
+  default     = "europe-west1-b"
 }
 
 variable disk_image {
@@ -19,7 +19,7 @@ variable disk_size {
 }
 variable disk_type {
   description = "Disk type: pd-standard or pd-ssd"
-  default = "pd-standard"
+  default     = "pd-standard"
 }
 
 variable public_key_path {
@@ -30,17 +30,17 @@ variable private_key_path {
 }
 
 variable root_enc_pass {
-    description = "Temporary root pass"
+  description = "Temporary root pass"
 }
 
 variable bastion_host {
-    description = "Host to provision"
+  description = "Host to provision"
 }
 
 variable network {
-    description = "Network to which attach vm"
+  description = "Network to which attach vm"
 }
 
 variable subnetwork {
-    description = "Subnetwork to which attach vm"
+  description = "Subnetwork to which attach vm"
 }

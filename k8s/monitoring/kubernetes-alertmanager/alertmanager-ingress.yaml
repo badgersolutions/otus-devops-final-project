@@ -1,0 +1,19 @@
+## Nginx Ingress
+## Follow https://devopscube.com/setup-ingress-kubernetes-nginx-controller/
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: alertmanager-ui
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  # Use the host you used in your kubernetes Ingress Configurations
+  - host: alertmanager.semernya.ru
+    http:
+      paths:
+      - backend:
+          serviceName: alertmanager
+          servicePort: 9093

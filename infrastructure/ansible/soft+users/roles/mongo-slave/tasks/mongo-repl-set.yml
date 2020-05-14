@@ -1,0 +1,7 @@
+- name: 0. Ubuntu. Copy JS to server
+  copy: src={{ item.src }} dest={{ item.dest }} force=no
+  with_items:
+          - { src: 'init_cluster.js', dest: '/tmp/'}
+
+- name: 1. Ubuntu. Exec JS script
+  command: mongo --authenticationDatabase "admin" -u "admin" -padmin /tmp/init_cluster.js

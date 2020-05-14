@@ -1,0 +1,30 @@
+   - name: 0. Ubuntu. Include vars
+     include_vars: ../vars/users.yml
+    
+   - name: 1. Ubuntu. Make sure we have a admin group
+     group:
+       name: admin
+       state: present
+
+   - name: 2. Ubuntu. Allow admin group to have passwordless sudo
+     lineinfile:
+       dest: /etc/sudoers
+       state: present
+       regexp: '^%admin'
+       line: '%admin ALL=(ALL) NOPASSWD: ALL'
+       validate: 'visudo -cf %s'
+
+   - name: 3. Ubuntu. Create users
+     user:
+       name: "{{ item.username }}"
+       groups: "admin"
+       state: present
+       shell: /bin/bash
+     with_items: "{{ users }}"
+
+   - name: 4. Ubuntu. Add public keys
+     authorized_key:
+       user: "{{ item.username }}"
+       key: "{{ lookup('file', '../../public_keys/'+ item.username + '.pub') }}"
+     with_items: "{{ users }}"
+     ignore_errors: yes

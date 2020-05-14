@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config
+  namespace: develop
+  labels:
+    app: config
+    sub: stage-app
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: config
+      sub: stage-app
+  template:
+    metadata:
+      labels:
+        app: config
+        sub: stage-app
+    spec:
+      containers:
+        - name: config
+          image: docker.pkg.github.com/badgersolutions/otus-devops-final-project/piggymetrics_config:1.1
+          env:
+          - name: CONFIG_SERVICE_PASSWORD
+            value: SecureP@ssw0rd
+      imagePullSecrets:
+        - name: github-pkg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+  namespace: develop
+  labels:
+    app: config
+spec:
+  ports:
+  - protocol: TCP
+    port: 8888
+    targetPort: 8888
+  selector:
+    app: config
+    sub: stage-app

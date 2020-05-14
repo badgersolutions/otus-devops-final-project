@@ -1,0 +1,10 @@
+---
+- name: base_soft ubuntu
+  include: base_soft_ubuntu.yml
+  tags: 
+    - base_soft
+
+- name: zabbix_agent ubuntu
+  include: install_zabbix_agent_ubuntu18.yml
+  tags: 
+    - zabbix_agent

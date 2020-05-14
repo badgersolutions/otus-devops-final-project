@@ -3,17 +3,17 @@ security:
     client:
       clientId: statistics-service
       clientSecret: ${STATISTICS_SERVICE_PASSWORD}
-      accessTokenUri: http://auth-service:5000/uaa/oauth/token
+      accessTokenUri: http://stage-app-auth-svc:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 
 spring:
   data:
     mongodb:
-      host: statistics-mongodb
-      username: user
+      uri: ${MONGODB_URI}
+      username: ${MONGODB_USER}
       password: ${MONGODB_PASSWORD}
-      database: piggymetrics
+      database: ${STATISTICS_DATABASE}
       port: 27017
 
 server:

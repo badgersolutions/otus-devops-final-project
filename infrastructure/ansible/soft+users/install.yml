@@ -1,0 +1,48 @@
+---
+- hosts: all 
+  roles: 
+    - { role: add_users, tags: users }
+    - { role: base_soft, tags: soft }
+    
+- hosts: monitoring
+  roles: 
+
+- hosts: hap_k8s
+  roles:
+    - { role: k8s_haproxy, tags: ha_k8s }
+
+- hosts: mn_k8s
+  roles:
+
+- hosts: wn_k8s
+  roles:
+
+- hosts: nfs1_k8s
+  roles:
+    - { role: k8s_storage, tags: nfs_k8s }
+
+- hosts: monitoring
+  roles:
+
+- hosts: logging
+  roles: 
+    - { role: logging, tags: elk }
+
+- hosts: web-proxy
+  roles:
+    - { role: nginx-proxy, tags: nginx }
+
+- hosts: bastion
+  roles: 
+
+- hosts: haproxy
+  roles: 
+    - { role: haproxy, tags: ha }
+
+- hosts: n1.mongodb.vs
+  roles: 
+    - { role: mongo-master, tags: mongo-master }
+
+- hosts: n2.mongodb.vs
+  roles: 
+    - { role: mongo-slave, tags: mongo-slave }

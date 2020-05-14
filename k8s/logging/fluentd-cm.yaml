@@ -1,0 +1,60 @@
+kind: ConfigMap
+apiVersion: v1
+data:
+  fluent.conf: |-
+    <source>
+      @type forward
+      port 24224
+      bind 0.0.0.0
+    </source>
+    <filter **>
+      @type parser
+      key_name log
+      format nginx
+    </filter>
+    <filter **>
+      @type parser
+      key_name log
+      format json
+    </filter>
+    <filter **>
+      @type parser
+      key_name log
+      format grok
+      grok_pattern (?<timestamp>%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{TIME})  %{LOGLEVEL:level} %{NUMBER:pid} --- \[(?<thread>[A-Za-z0-9-]+)\] .+? :\s+(?<logmessage>.*)
+    </filter>
+    <filter **>
+      @type parser
+      key_name log
+      format grok
+      grok_pattern (?<timestamp>%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{TIME})  %{LOGLEVEL:level} \[(?<servicename>[A-Za-z0-9-,]+)\] %{NUMBER:pid} --- \[(?<thread>[A-Za-z0-9-]+)\] .+? :\s+(?<logmessage>.*)
+    </filter>
+    <filter **>
+    @type parser
+      key_name log
+      format grok
+      grok_pattern (?<ipaddr>%{IPV4}) - - \[(?<timestamp>%{MONTHDAY}\/%{MONTH}\/%{YEAR}:%{HOUR}:%{MINUTE}:%{SECOND})\s*\+[0-9]{4}\]\s*(?<message>%{QUOTEDSTRING})\s*(?<returncode>[0-9]{3})\s*(?<scode>[0-9]{1})\s*(?<smessage>%{QUOTEDSTRING})\s*(?<component>%{QUOTEDSTRING})
+    </filter>
+    <match *.**>
+      @type copy
+      <store>
+        @type elasticsearch
+        host 10.0.1.20
+        port 9200
+        logstash_format true
+        logstash_prefix fluentd
+        logstash_dateformat %Y%m%d
+        include_tag_key true
+        type_name access_log
+        tag_key @log_name
+        flush_interval 1s
+      </store>
+      <store>
+        @type stdout
+      </store>
+    </match>
+metadata:
+  name: fluentd-es-config-v0.1.1
+  namespace: kube-logging
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile

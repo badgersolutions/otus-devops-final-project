@@ -1,0 +1,12 @@
+---
+- name: restart ntp
+  service: name=ntp state=restarted
+
+- name: restart zabbix-agent
+  service: name=zabbix-agent state=restarted
+  
+- name: reload zabbix-agent
+  service: name=zabbix-agent state=reloaded
+
+- name: restart ntpd
+  service: name=ntpd state=restarted
